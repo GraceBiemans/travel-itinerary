@@ -12,9 +12,9 @@ function Dashboard({ itineraries }) {
         Add New Itinerary
       </Link>
       <div className="itinerary-list">
-        {itineraries.map((itinerary, index) => (
-          <div key={index} className="itinerary-card">
-            <Link to={`/itinerary/${index}`}>
+        {itineraries.map((itinerary) => (
+          <div key={itinerary.id} className="itinerary-card">
+            <Link to={`/itinerary/${itinerary.id}`}>
               <h2>{itinerary.tripName}</h2>
             </Link>
           </div>

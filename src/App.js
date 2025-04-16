@@ -4,12 +4,33 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import ItineraryForm from './components/ItineraryForm';
 import ItineraryPage from './components/ItineraryPage';
+import SharedItinerary from './components/SharedItinerary';
 
 function App() {
-  const [itineraries, setItineraries] = useState([]);
+  const [itineraries, setItineraries] = useState(() => {
+    // Load itineraries from localStorage if available
+    const saved = localStorage.getItem('itineraries');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Generate a unique ID
+  const generateUniqueId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  };
 
   const addItinerary = (newItinerary) => {
-    setItineraries([...itineraries, newItinerary]);
+    const itineraryWithId = {
+      ...newItinerary,
+      id: generateUniqueId()
+    };
+    const updatedItineraries = [...itineraries, itineraryWithId];
+    setItineraries(updatedItineraries);
+    // Save to localStorage
+    localStorage.setItem('itineraries', JSON.stringify(updatedItineraries));
+  };
+
+  const getItineraryById = (id) => {
+    return itineraries.find(itinerary => itinerary.id === id);
   };
 
   return (
@@ -24,6 +45,10 @@ function App() {
           <Route
             path="/itinerary/:id"
             element={<ItineraryPage itineraries={itineraries} />}
+          />
+          <Route
+            path="/share/:id"
+            element={<SharedItinerary itineraries={itineraries} />}
           />
         </Routes>
       </div>
