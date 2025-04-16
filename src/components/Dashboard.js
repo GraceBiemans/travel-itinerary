@@ -8,9 +8,6 @@ function Dashboard({ itineraries }) {
         <h1>My Travel Itineraries</h1>
         <div style={{ width: '120px' }}></div>
       </div>
-      <Link to="/new-itinerary" className="primary-button add-itinerary-button">
-        Add New Itinerary
-      </Link>
       <div className="itinerary-list">
         {itineraries.map((itinerary) => (
           <div key={itinerary.id} className="itinerary-card">
@@ -20,6 +17,9 @@ function Dashboard({ itineraries }) {
           </div>
         ))}
       </div>
+      <Link to="/new-itinerary" className="primary-button add-itinerary-button">
+        Add New Itinerary
+      </Link>
     </div>
   );
 }
